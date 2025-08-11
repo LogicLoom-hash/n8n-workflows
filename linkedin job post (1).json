@@ -1,0 +1,1145 @@
+{
+  "name": "linkedin job post",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "={{ $(\"Job_Details\").item.json[\"Company Website\"] + \"/about-us\" }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        816,
+        480
+      ],
+      "id": "8fb6749c-07e5-440a-8985-4ad233acd7e8",
+      "name": "get_about_page"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1,
+                3,
+                5
+              ],
+              "triggerAtHour": 14
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -32,
+        336
+      ],
+      "id": "ad40faa4-fe27-4de7-8059-ec69d4ab8339",
+      "name": "Schedule_Job_Post"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "apptUJ45YqVLI5UvQ",
+          "mode": "list",
+          "cachedResultName": "Linkedin Job Details",
+          "cachedResultUrl": "https://airtable.com/apptUJ45YqVLI5UvQ"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblP5K12OAqZrb2bo",
+          "mode": "list",
+          "cachedResultName": "Linkedin_Job_post_details",
+          "cachedResultUrl": "https://airtable.com/apptUJ45YqVLI5UvQ/tblP5K12OAqZrb2bo"
+        },
+        "filterByFormula": "={Status} = \"Waiting\"",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        192,
+        336
+      ],
+      "id": "8bc9ae0e-4c6f-4c57-a8e9-820e0b40ad48",
+      "name": "Job_Details",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "oyxbwJBM9p29WwP4",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate a job post for linkedin from the given details below:\nCompany:{{ $json.Company }}\n\nJob Title: {{ $json['Job Title'] }}\n\nJob Description:{{ $json.Description }}\n\nSkills Required:{{ $json['Skills Required'] }}\n\nLocation:{{ $json.Location[0] }}\n\nContact Email:{{ $json['Contact Email'] }}\n\nApplication Deadline:{{ $json['Application Deadline'] }}\n\nSalary Range:{{ $json['Salary Range'] }}\n\nCompany Website: {{ $json['Company Website'] }}",
+        "options": {
+          "systemMessage": "#Role:\nYou are a highly skilled and professional copywriter specializing in crafting clear, compelling, and human-like job advertisements for a diverse range of industries. Your primary objective is to attract well-suited candidates by presenting job opportunities in an engaging, accessible, and jargon-free manner.\n\n#Behavioral Guidelines:\n\n- Maintain a professional, concise, and direct tone.\n- Prioritize clarity and natural, human-like language.\n- Strictly avoid all industry jargon, buzzwords, clichés, and any form of emojis or decorative characters.\n- Ensure the overall tone is inviting and accurately reflects a positive work environment.\n- If any essential information required for a complete job post is explicitly missing from the provided data, you MUST clearly state what information is needed. Do NOT make assumptions or invent any details.\n\n#Capabilities and Restrictions:\n\nYou are capable of transforming structured job details (such as job title, company, location, job description, skills required, benefits, salary range, and application deadline) into a coherent, professional job post. You can effectively highlight key aspects of the role to make it appealing to potential candidates. You are strictly prohibited from inventing any job details, company information, or benefits that are not explicitly provided in the input. You cannot access external websites, perform real-time data lookups, or use any information beyond what is directly supplied to you in the current input. You must not include any personal opinions, subjective statements, or promotional fluff that isn't directly supported by the provided job data.\n\n#Output Format:\n\nGenerate the complete job post using Markdown to ensure clear and professional formatting.\n\n- Use Markdown headings (e.g., ## or ###) for all section titles.\n- Use Markdown bolding (**text**) to emphasize key terms or titles.\n- Use Markdown bullet points (-) to list job responsibilities, skills, and benefits for improved readability.\n\nStructure the post using clear and distinct headings. Recommended headings include: \"About the Role,\" \"About Us,\" \"What You'll Do,\" \"What We're Looking For,\" and \"Why Join Us.\"\n\nUse the tool get_about_page for the \"About Us\" section.\n\nAlways include a clear and concise call to action for applying. If an application deadline is provided, ensure it is clearly mentioned. The language used must be natural and easy to understand for a broad audience.\n\nSenior Software Engineer at Innovate Solutions\nJoin Innovate Solutions, a fast-growing tech company focused on creating cutting-edge AI products. We are seeking a highly motivated Senior Software Engineer to contribute to our innovative projects and drive technical excellence. We value innovation, collaboration, and continuous learning.\n\nExample:\n\nAbout Innovate Solutions:\n\nInnovate Solutions is a global job placement consultancy dedicated to helping clients achieve their core targets by providing end-to-end recruitment services. We are committed to connecting the right people with the right jobs, leveraging modern technology and a wide network across all industries. We value consistent performance, confidentiality, and strive for excellence in every placement.\n\nWhat You'll Do:\n\n- Design and develop highly scalable and robust software solutions.\n- Mentor and guide junior engineers, fostering a collaborative and supportive environment.\n- Collaborate effectively with cross-functional teams to define, design, and implement new product features.\n\nWhat We're Looking For:\n\n- Experience: 5+ years of professional experience in software development.\n- Technical Skills: Proven proficiency in Python and experience with cloud platforms, particularly AWS.\n- Education: Bachelor's degree in Computer Science or a related technical field.\n\nWhy Join Us:\n\nAt Innovate Solutions, we believe in empowering our team members. We offer a comprehensive benefits package including:\n\n- Compensation: A competitive salary ranging from $120,000 - $150,000.\n- Work-Life Balance: Generous unlimited Paid Time Off (PTO).\n- Health & Wellness: Comprehensive health, dental, and vision insurance.\n- Growth: A dedicated budget for professional development and continuous learning opportunities.\n\nApply Now:\n\nReady to make an impact? Submit your application by August 31, 2025. Please send your resume and cover letter to careers@innovatesolutions.com."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        640,
+        224
+      ],
+      "id": "4c3cc48d-2a6e-44d0-aee8-be3bce64cbcf",
+      "name": "Job Post Agent"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "shrasanyad@gmail.com",
+        "subject": "Approval Required",
+        "message": "=Please review the following job post for publishing:\n\n{{ $node[\"Job Post Agent\"].json.output }}\n\nApprove or Reject?",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double",
+            "disapproveLabel": "Reject"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        992,
+        336
+      ],
+      "id": "a918bdfb-e934-4fa4-bd21-433933f5514c",
+      "name": "Job Post Approval",
+      "webhookId": "22d89a65-cc42-4e3c-8137-80da64f0f4d6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "vhVdcZLLjT26mSDn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "182bde30-2efa-4f1f-851f-5d0b36513376",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1216,
+        336
+      ],
+      "id": "ee8e8ee0-4c80-4522-a6b5-6790610a9fe7",
+      "name": "Approve or Reject"
+    },
+    {
+      "parameters": {
+        "postAs": "organization",
+        "organization": "108111383",
+        "text": "={{ $node[\"Job Post Agent\"].json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        240
+      ],
+      "id": "8814d1ba-9691-40f0-a2ec-ce212a18575b",
+      "name": "Post Job"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "apptUJ45YqVLI5UvQ",
+          "mode": "list",
+          "cachedResultName": "Linkedin Job Details",
+          "cachedResultUrl": "https://airtable.com/apptUJ45YqVLI5UvQ"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblP5K12OAqZrb2bo",
+          "mode": "list",
+          "cachedResultName": "Linkedin_Job_post_details",
+          "cachedResultUrl": "https://airtable.com/apptUJ45YqVLI5UvQ/tblP5K12OAqZrb2bo"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "Posted",
+            "id": "={{ $('Job_Details').item.json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Job ID",
+              "displayName": "Job ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Job Title",
+              "displayName": "Job Title",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Company Website",
+              "displayName": "Company Website",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "options": [
+                {
+                  "name": "Remote",
+                  "value": "Remote"
+                },
+                {
+                  "name": "New York",
+                  "value": "New York"
+                },
+                {
+                  "name": "NY",
+                  "value": "NY"
+                },
+                {
+                  "name": "San Francisco",
+                  "value": "San Francisco"
+                },
+                {
+                  "name": "CA",
+                  "value": "CA"
+                },
+                {
+                  "name": "Boston",
+                  "value": "Boston"
+                },
+                {
+                  "name": "MA",
+                  "value": "MA"
+                },
+                {
+                  "name": "Chicago",
+                  "value": "Chicago"
+                },
+                {
+                  "name": "IL",
+                  "value": "IL"
+                },
+                {
+                  "name": "Austin",
+                  "value": "Austin"
+                },
+                {
+                  "name": "TX",
+                  "value": "TX"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Job Type",
+              "displayName": "Job Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Full-time",
+                  "value": "Full-time"
+                },
+                {
+                  "name": "Part-time",
+                  "value": "Part-time"
+                },
+                {
+                  "name": "Contract",
+                  "value": "Contract"
+                },
+                {
+                  "name": "Freelance",
+                  "value": "Freelance"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Posting Date",
+              "displayName": "Posting Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Application Deadline",
+              "displayName": "Application Deadline",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Open",
+                  "value": "Open"
+                },
+                {
+                  "name": "Closed",
+                  "value": "Closed"
+                },
+                {
+                  "name": "Waiting",
+                  "value": "Waiting"
+                },
+                {
+                  "name": "Posted",
+                  "value": "Posted"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Salary Range",
+              "displayName": "Salary Range",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Skills Required",
+              "displayName": "Skills Required",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Contact Email",
+              "displayName": "Contact Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Record_id",
+              "displayName": "Record_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1664,
+        240
+      ],
+      "id": "cd1dea22-045c-41a8-8057-29db25d7ce40",
+      "name": "Update status",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "oyxbwJBM9p29WwP4",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Automate job postings with form fields, grammar checks, auto-generation, and direct posting to LinkedIn/email campaigns",
+        "height": 80,
+        "width": 832
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -96,
+        -48
+      ],
+      "typeVersion": 1,
+      "id": "317d6658-879d-4e8d-99e9-6ae266928b6c",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "apptUJ45YqVLI5UvQ",
+          "mode": "list",
+          "cachedResultName": "Linkedin Job Details",
+          "cachedResultUrl": "https://airtable.com/apptUJ45YqVLI5UvQ"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblleRZS3e22XPttt",
+          "mode": "list",
+          "cachedResultName": "Candidates_list",
+          "cachedResultUrl": "https://airtable.com/apptUJ45YqVLI5UvQ/tblleRZS3e22XPttt"
+        },
+        "filterByFormula": "={Status} = \"Email Not Sent\"",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        192,
+        768
+      ],
+      "id": "d5da1182-7498-47a5-b141-de5bae3befc9",
+      "name": "Get_Candidates",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "oyxbwJBM9p29WwP4",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8a7c5bf5-4051-486b-9d87-5cbe21d94b8b",
+              "leftValue": "={{ $json.suitability_score }}",
+              "rightValue": 7,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        992,
+        768
+      ],
+      "id": "a449f41c-ade7-45ff-ba03-95fa5a47f381",
+      "name": "If_Suitable"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "={{ $json['Job Title'] }} Opportunity at {{ $json.Company }}",
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1216,
+        768
+      ],
+      "id": "f9a32b6e-e9e0-421b-abaa-eb59705cca59",
+      "name": "Send_Email",
+      "webhookId": "6e4abd7a-a29a-4b35-b76e-7a5c58433ce6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "vhVdcZLLjT26mSDn",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "apptUJ45YqVLI5UvQ",
+          "mode": "list",
+          "cachedResultName": "Linkedin Job Details",
+          "cachedResultUrl": "https://airtable.com/apptUJ45YqVLI5UvQ"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblleRZS3e22XPttt",
+          "mode": "list",
+          "cachedResultName": "Candidates_list",
+          "cachedResultUrl": "https://airtable.com/apptUJ45YqVLI5UvQ/tblleRZS3e22XPttt"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "Email Sent",
+            "id": "={{ $('Get_Candidates').item.json.id }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Candidate Name",
+              "displayName": "Candidate Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Relevant Experience",
+              "displayName": "Relevant Experience",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Skills",
+              "displayName": "Skills",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Education",
+              "displayName": "Education",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Email Sent",
+                  "value": "Email Sent"
+                },
+                {
+                  "name": "Email Not Sent",
+                  "value": "Email Not Sent"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1440,
+        768
+      ],
+      "id": "cbdc32bd-57c2-4756-b554-232fcbc8144c",
+      "name": "Update_Candidate_Status",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "oyxbwJBM9p29WwP4",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        656,
+        448
+      ],
+      "id": "cbf8c946-fc95-4582-85f1-47818b7bed62",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Mg6OenDngp4mBDtU",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Job Details: {{ $node[\"Job Post Agent\"].json.output }}\n\n\nCandidate Details:\nCandidate Name: {{ $json['Candidate Name'] }}\nRelevant Experience: {{ $json['Relevant Experience'] }}\nSkills: {{ $json.Skills }}\nEducation: {{ $json.Education }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are a professional recruiter. Your task is to evaluate a candidate's suitability for a job based on the provided job details and the candidate's profile. You must provide a suitability score out of 10 and a brief summary of your evaluation. If a job description is not provided, you must explicitly state that a job description is required for the evaluation. You must respond in a structured JSON format with two keys: suitability_score (integer) and summary (string)."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        640,
+        768
+      ],
+      "id": "aa349228-ecbc-4a6e-b3e3-f6fa125d4f20",
+      "name": "Candidate_Suitability_Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        720,
+        992
+      ],
+      "id": "a1eb3e8f-36f6-4891-8b03-3edaf8cd829b",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Mg6OenDngp4mBDtU",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        416,
+        336
+      ],
+      "id": "52d0ce01-c9ff-4d2a-bf33-9b2e18080604",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        416,
+        768
+      ],
+      "id": "29b13ebf-b8a5-49e4-af9b-00c68806dd62",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "content": "Workflow 2: Candidate Matching and Email.\n",
+        "height": 80
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -32,
+        624
+      ],
+      "typeVersion": 1,
+      "id": "f8dcddba-0d1b-4b8c-aa64-ab11c4356773",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "Humal-in-loop:\nopen this email and click either \"Approve\" or \"Reject\"",
+        "height": 96
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        944,
+        192
+      ],
+      "typeVersion": 1,
+      "id": "7369361c-8791-4cfe-806b-a7f559b21c22",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "This AI Agent fetches \"About Us\" for multiple companies. For a single company, a basic LLM chain can suffice, as no external tools or memory are needed.",
+        "height": 96,
+        "width": 448
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        432,
+        96
+      ],
+      "typeVersion": 1,
+      "id": "1a0cf2e2-1b6f-4419-86dc-685d75389cf6",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://shravani26.app.n8n.cloud/webhook-test/ee2d1f72-1821-424e-8340-e147157c057d",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1440,
+        432
+      ],
+      "id": "25e89b34-195a-4362-938d-70d8bbe36e7e",
+      "name": "Post_job_post details"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ee2d1f72-1821-424e-8340-e147157c057d",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -32,
+        768
+      ],
+      "id": "1be9d08f-a1ef-4a6c-bffc-bcf835b0da0b",
+      "name": "get_Job_post_details",
+      "webhookId": "ee2d1f72-1821-424e-8340-e147157c057d"
+    }
+  ],
+  "pinData": {
+    "Candidate_Suitability_Agent": [
+      {
+        "json": {
+          "text": "```json\n{\n  \"suitability_score\": 4,\n  \"summary\": \"Chris Davis possesses 2 years of relevant experience as a Social Media Coordinator, aligning well with the 'Social Media' skill requirement for the Marketing Specialist role. However, a significant gap exists in the crucial areas of 'SEO' and 'Content Marketing,' both explicitly listed as required skills and integral to MarketGrow's services, especially SEO. While Chris's skills in Social Media Management and basic analytics are valuable, the role's emphasis on developing and implementing broader marketing strategies, combined with the lack of SEO expertise for an SEO-focused agency, limits overall suitability. The A.A. degree is also on the lower end for a specialist role, though not a deal-breaker if skills were a perfect match.\"\n}\n```"
+        }
+      }
+    ],
+    "Job Post Agent": [
+      {
+        "json": {
+          "output": "Marketing Specialist at MarketGrow\n\nJoin MarketGrow, an India-based Digital Marketing and Web Development agency established in 2022. We are seeking a dynamic Marketing Specialist to join our team in New York. We are dedicated to helping businesses grow through innovative marketing strategies and stunning web development, focusing on long-term goals and client success.\n\nAbout Us\n\nMarketGrow is an India-based Digital Marketing and Web Development agency, established in 2022. We are committed to helping businesses thrive by providing tailored strategies and innovative solutions. Our expertise spans web design, digital marketing, and graphic design, all aimed at enhancing online presence, driving engagement, and delivering exceptional results. We combine creativity with data-driven insights to ensure our clients' brands stand out and perform at their best. Our client-centric approach means we diligently focus on understanding your needs and delivering personalized solutions that drive growth and engagement. We believe in building our clients' careers to become leaders in their field and overcome challenges through dedicated teamwork.\n\nWhat You'll Do\n\nDevelop and implement marketing strategies.\n\nWhat We're Looking For\n\nSkills: Proficiency in SEO, Content Marketing, and Social Media.\n\nWhy Join Us\n\nCompensation: A competitive salary ranging from $50,000 - $70,000.\n\nApply Now\n\nReady to contribute to a growing team? Submit your application by November 15, 2023. Please send your resume and cover letter to marketing@marketgrow.com."
+        }
+      },
+      {
+        "json": {
+          "output": "I cannot generate a complete job post for \"WordCraft\" because the \"About Us\" information for this company is missing. The \"About Us\" content retrieved is for \"Market grow\", which does not match the provided company name.\n\nPlease provide the \"About Us\" details for WordCraft."
+        }
+      },
+      {
+        "json": {
+          "output": "I cannot generate a complete job post at this time because the \"About Us\" information for PeopleFirst is missing. The provided company website link directed to a different company's information. Please provide the correct \"About Us\" details for PeopleFirst to proceed."
+        }
+      },
+      {
+        "json": {
+          "output": "I cannot generate the \"About Us\" section for Innovate Ltd as the `get_about_page` tool returned information for \"Market grow,\" which appears to be a different company. To create a complete and accurate job post, please provide the correct \"About Us\" details for Innovate Ltd.\n\nHowever, I can proceed with the rest of the job post using the information provided:\n\n**Product Manager at Innovate Ltd**\n\nJoin Innovate Ltd in Boston as a Product Manager. We are looking for a driven individual to lead the development and launch of new products.\n\n**What You'll Do**\n\nLead the development and launch of new products.\n\n**What We're Looking For**\n\n*   **Skills:** Agile methodologies, Product Development, Market Research.\n*   **Location:** Boston\n\n**Why Join Us**\n\n*   **Compensation:** A competitive salary ranging from $100,000 - $130,000.\n\n**Apply Now**\n\nReady to contribute to our team? Submit your application by December 1, 2023. Please send your resume and cover letter to jobs@innovate.com."
+        }
+      },
+      {
+        "json": {
+          "output": "I cannot generate a complete job post as the \"About Us\" information retrieved from the provided company website does not match \"SalesPro.\" The content is for a company named \"Market Grow.\" Please provide the correct \"About Us\" information for SalesPro or confirm if \"Market Grow\" is the correct company."
+        }
+      },
+      {
+        "json": {
+          "output": "I am unable to generate the \"About Us\" section for \"SupportHub\" as the provided company website did not contain relevant information for the specified company. The \"About Us\" content retrieved belongs to \"Market grow,\" a digital marketing and web development agency.\n\nTo provide a complete job post, I require the \"About Us\" information specifically for \"SupportHub.\""
+        }
+      },
+      {
+        "json": {
+          "output": "Here's a draft for the Graphic Designer job post at Creative Designs. Please note that I could not retrieve specific \"About Us\" information for \"Creative Designs\" from the provided company website, and therefore, that section needs to be filled in with accurate details about your company.\n\n---\n\n**Graphic Designer at Creative Designs**\n\nAre you a talented Graphic Designer looking for a remote opportunity to bring creative visions to life? Creative Designs is seeking a skilled individual to join our team and contribute to diverse marketing materials and campaigns.\n\n**About Us**\n\n[Please insert a brief and engaging description of Creative Designs here. This section should highlight your company's mission, values, and what makes it a great place to work. For example: \"Creative Designs is a [brief description of company, e.g., innovative design studio, dynamic marketing agency] dedicated to [company's core mission/values]. We foster a collaborative and supportive environment where creativity thrives and ideas are transformed into impactful visual solutions.\"]\n\n**What You'll Do**\n\n*   Design engaging graphics for a variety of marketing materials and campaigns.\n*   Collaborate with the team to understand project requirements and deliver high-quality visual solutions.\n*   Contribute to the overall aesthetic and brand consistency across all design projects.\n\n**What We're Looking For**\n\n*   **Skills:** Proven proficiency in Adobe Photoshop, Adobe Illustrator, and UI/UX Design principles.\n*   **Experience:** [Please specify desired years of experience, if any, e.g., \"Minimum of 2 years of professional graphic design experience.\" If no specific years are required, you can omit this line or state \"Relevant experience in graphic design.\"].\n\n**Why Join Us**\n\n*   **Location:** This is a fully remote position, offering flexibility and convenience.\n*   **Compensation:** Competitive hourly rate ranging from $40 - $60.\n\n**Apply Now**\n\nIf you're ready to make a visual impact, we encourage you to apply! Please send your resume and portfolio to design@creativedesigns.com by November 30, 2023."
+        }
+      },
+      {
+        "json": {
+          "output": "Software Engineer at Tech Solutions Inc.\n\nJoin Tech Solutions Inc. as a Software Engineer. This is a remote position where you will contribute to developing and maintaining software applications. We are seeking a skilled individual to become a valuable part of our team.\n\nAbout Us\nInformation about Tech Solutions Inc. is not available.\n\nWhat You'll Do\nDevelop and maintain software applications.\n\nWhat We're Looking For\nTechnical Skills: Proficiency in Python, JavaScript, and Docker.\n\nWhy Join Us\nCompensation: A competitive salary ranging from $90,000 - $120,000.\nWork Environment: This is a remote position, offering flexibility.\n\nApply Now\nReady to contribute to our team? Submit your application by November 1, 2023. Please send your resume to contact@techsolutions.com."
+        }
+      }
+    ],
+    "Job Post Approval": [
+      {
+        "json": {
+          "data": {
+            "approved": true
+          }
+        }
+      }
+    ],
+    "Post Job": [
+      {
+        "json": {
+          "urn": "urn:li:share:7358130377967730688"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "get_about_page": {
+      "ai_tool": [
+        [
+          {
+            "node": "Job Post Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule_Job_Post": {
+      "main": [
+        [
+          {
+            "node": "Job_Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Job_Details": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Job Post Agent": {
+      "main": [
+        [
+          {
+            "node": "Job Post Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Job Post Approval": {
+      "main": [
+        [
+          {
+            "node": "Approve or Reject",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Approve or Reject": {
+      "main": [
+        [
+          {
+            "node": "Post Job",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Post_job_post details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Job": {
+      "main": [
+        [
+          {
+            "node": "Update status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_Candidates": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If_Suitable": {
+      "main": [
+        [
+          {
+            "node": "Send_Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send_Email": {
+      "main": [
+        [
+          {
+            "node": "Update_Candidate_Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Job Post Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Candidate_Suitability_Agent": {
+      "main": [
+        [
+          {
+            "node": "If_Suitable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Candidate_Suitability_Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Job Post Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Candidate_Suitability_Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_Job_post_details": {
+      "main": [
+        [
+          {
+            "node": "Get_Candidates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "48a9abaa-88fe-40b9-bb00-c045131d62b7",
+  "meta": {
+    "instanceId": "7491c4cd83350a5ae40c99ddd973856dc10378aa0461a855fd93ceed1860eaae"
+  },
+  "id": "MwmLsHVdslN3qb9r",
+  "tags": []
+}
