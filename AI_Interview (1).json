@@ -1,0 +1,1895 @@
+{
+  "name": "AI_Interview",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "Conduct AI-driven interviews to validate intern candidates\n",
+        "height": 80
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        320,
+        -192
+      ],
+      "typeVersion": 1,
+      "id": "85d49915-f20f-4abf-88e8-db6859f207f5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"status\": \"success\",\n  \"message\": \"AI interview process completed successfully.\",\n  \"sessionId\": \"{{$json.sessionId}}\",\n  \"finalReportStatus\": \"submitted\",\n  \"recommendation\": \"{{$node[\\\"AI Agent\\\"].json[\\\"recommendation\\\"]}}\"\n}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        784,
+        448
+      ],
+      "id": "76c9a7a1-037e-421a-9c73-4058ca12360e",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appof7NN9RhTAn9ls",
+          "mode": "list",
+          "cachedResultName": "AI_interview",
+          "cachedResultUrl": "https://airtable.com/appof7NN9RhTAn9ls"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblCbJer734SHS6AK",
+          "mode": "list",
+          "cachedResultName": "interview_candidates",
+          "cachedResultUrl": "https://airtable.com/appof7NN9RhTAn9ls/tblCbJer734SHS6AK"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "explanation": "={{ $('received_data').item.json.explanation }}",
+            "recommendation": "={{ $('received_data').item.json.recommendation }}",
+            "session_id": "={{ $('received_data').item.json.session_id }}"
+          },
+          "matchingColumns": [
+            "session_id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "candidate_id",
+              "displayName": "candidate_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "candidate_name",
+              "displayName": "candidate_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "candidate_email",
+              "displayName": "candidate_email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "target_job_id",
+              "displayName": "target_job_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "interview_date",
+              "displayName": "interview_date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "job_title (from target_job_id)",
+              "displayName": "job_title (from target_job_id)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "job_description (from target_job_id)",
+              "displayName": "job_description (from target_job_id)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "required_skills (from target_job_id)",
+              "displayName": "required_skills (from target_job_id)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "ideal_candidate_profile (from target_job_id)",
+              "displayName": "ideal_candidate_profile (from target_job_id)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "resume_summary",
+              "displayName": "resume_summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "interview_link",
+              "displayName": "interview_link",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Link Sent",
+                  "value": "Link Sent"
+                },
+                {
+                  "name": "Link Not Sent",
+                  "value": "Link Not Sent"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "recommendation",
+              "displayName": "recommendation",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "explanation",
+              "displayName": "explanation",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Calculation",
+              "displayName": "Calculation",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        448,
+        560
+      ],
+      "id": "9ce7a8e8-21e5-45c2-9b89-037c3f6a03a2",
+      "name": "Update candidate_details",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "VhhcTHNJeFBRtkNz",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appof7NN9RhTAn9ls",
+          "mode": "list",
+          "cachedResultName": "AI_interview",
+          "cachedResultUrl": "https://airtable.com/appof7NN9RhTAn9ls"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblCbJer734SHS6AK",
+          "mode": "list",
+          "cachedResultName": "interview_candidates",
+          "cachedResultUrl": "https://airtable.com/apptUJ45YqVLI5UvQ/tblCbJer734SHS6AK"
+        },
+        "filterByFormula": "={Status} = 'Link Sent'",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        576,
+        560
+      ],
+      "id": "e2743598-5939-4adb-9cb8-d1248de0419c",
+      "name": "interview_candidates",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "VhhcTHNJeFBRtkNz",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -128,
+        112
+      ],
+      "id": "fc357472-1183-40cf-9d86-a388076bfd6a",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "content": "Interview with Eleven labs conversational Agent",
+        "height": 80
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -176,
+        336
+      ],
+      "typeVersion": 1,
+      "id": "d0b50139-a50b-4880-845a-3b89d5dda84f",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        320,
+        112
+      ],
+      "id": "6fc5765e-83ee-4d89-b3b1-4da104f0298f",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $json.interview_date }}",
+        "format": "yyyy/MM/dd",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        768,
+        112
+      ],
+      "id": "88326d62-5256-4298-86a0-29cd46c5513b",
+      "name": "Format_date_for_email"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appof7NN9RhTAn9ls",
+          "mode": "list",
+          "cachedResultName": "AI_interview",
+          "cachedResultUrl": "https://airtable.com/appof7NN9RhTAn9ls"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblCbJer734SHS6AK",
+          "mode": "list",
+          "cachedResultName": "interview_candidates",
+          "cachedResultUrl": "https://airtable.com/appof7NN9RhTAn9ls/tblCbJer734SHS6AK"
+        },
+        "filterByFormula": "{Status} = 'Link Not Sent'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        96,
+        112
+      ],
+      "id": "58cb16df-b60c-4dc4-89f7-eba5c9a27281",
+      "name": "Link_sent_status",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "VhhcTHNJeFBRtkNz",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "functionCode": "return items.map(item => {\n  item.json.session_id = Date.now() + '-' + Math.floor(Math.random() * 10000);\n  return item;\n});"
+      },
+      "id": "52f946ee-a942-4424-9918-39d6ec5b514d",
+      "name": "Generate session_id",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        544,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6e168e42-1ea2-40ae-bddc-b3a73c7eb711",
+              "name": "id",
+              "value": "={{ $('Link_sent_status').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "1009e4b0-9a02-4901-b277-e1f5183ea08e",
+              "name": "candidate_id",
+              "value": "={{ $('Link_sent_status').item.json.candidate_id }}",
+              "type": "string"
+            },
+            {
+              "id": "0f24ee31-af14-42d5-beb2-094665c6ec9d",
+              "name": "candidate_name",
+              "value": "={{ $('Link_sent_status').item.json.candidate_name }}",
+              "type": "string"
+            },
+            {
+              "id": "62f766b9-fd16-44ed-9ea1-27f73d5cacaf",
+              "name": "candidate_email",
+              "value": "={{ $('Link_sent_status').item.json.candidate_email }}",
+              "type": "string"
+            },
+            {
+              "id": "bca0c13c-d80c-4c24-912f-750ed07fef3b",
+              "name": "interview_link",
+              "value": "={{ $('Generate session_id').item.json.interview_link }}&session_id={{ $('Generate session_id').item.json.session_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1216,
+        112
+      ],
+      "id": "cf96504d-ef25-4dd1-92c5-b5a007db8d73",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        320,
+        560
+      ],
+      "id": "7d3638e7-05e2-4fca-a0a3-b4eda7d2bd57",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Ubr33xPma2TOkRiA",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "post-call",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -128,
+        768
+      ],
+      "id": "00fcb186-19c1-465c-8d49-3e1c913aa929",
+      "name": "conversation_transcript",
+      "webhookId": "fc1fc301-d326-45ba-9be1-e6474dfdc7bd"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "AI-interview",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -128,
+        448
+      ],
+      "id": "3902e0d4-d138-45f9-b738-b29dfb8535af",
+      "name": "Eleven_labs",
+      "webhookId": "b2861bf7-2efb-4a59-92d7-c17c3efaa963"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"session_id\": \"1756106884417-4824\",\n  \"recommendation\": \"Further review\",\n  \"explanation\": \"Emily has a good foundation but needs more practical experience. Further technical assessment recommended.\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        96,
+        448
+      ],
+      "id": "eefe702f-9d18-4037-8295-8dc216654788",
+      "name": "received_data"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Incoming Tool Call Request:\nAction: {{ $('Eleven_labs').item.json.body.action }}\nSession ID: {{ $json.session_id }}\n\nAfter receiving the response from this tool call, you will have all the necessary context to begin the interview.\nYou MUST NOT ask the user for any information at this stage. Proceed with the tool call.",
+        "options": {
+          "systemMessage": "# Purpose\nYou are an API utility agent that communicates with the n8n backend to retrieve and update interview-related data. You do NOT conduct interviews or ask questions. Your job is to:\n1. Fetch job description and candidate details.\n2. Update candidate interview results after the interview is completed.\n\n# Tools\nYou have access to the following actions:\n\n- **interview_candidates**\n  Fetch all the details for the given session_id.\n  Example payload:\n  {\n    \"action\": \"interview_candidates\",\n    \"session_id\": \"{{session_id}}\"\n  }\n\n- **Update_interview_candidates**\n  Update candidate's interview outcome after the session.\n  Example payload:\n  {\n    \"action\": \"Update_interview_candidates\",\n    \"session_id\": \"{{session_id}}\",\n    \"recommendation\": \"Hire | Do not hire | Further review\",\n    \"explanation\": \"Short rationale using resume and answers.\",\n    \"conversation_transcript\": \"Full Q&A text\"\n  }\n\n# Behavior\n- Always include the correct `session_id` provided via dynamic variable `{{session_id}}`.\n- Do NOT make up data. Only use information provided by the tool response or the interviewer agent.\n- If a required field is missing, respond with an error message and wait for clarification.\n\n# Guardrails\n- Never attempt to conduct the interview or generate questions.\n- Never fabricate candidate or job details.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        384,
+        336
+      ],
+      "id": "eca214b5-aef4-4d9e-a910-adc66c9a9653",
+      "name": "Tools Agent"
+    },
+    {
+      "parameters": {
+        "sendTo": "shrasanyad@gmail.com",
+        "subject": "Interview Reminder – Your Scheduled AI Interview",
+        "emailType": "text",
+        "message": "=Hi {{ $('Link_sent_status').item.json.candidate_name }},\n\nThis is a reminder about your upcoming interview for the Internship Role.\n\n📅 Date & Time: {{ $('Format_date_for_email').item.json.formattedDate }}\n🧑‍💼 Interviewer: AI HR Interviewer\n\nPlease join the interview at your scheduled time using the link below:\nhttps://elevenlabs.io/app/talk-to?agent_id=agent_5001k2hanwceer1t72bp4a3w3v3f&session_id={{ $('Generate session_id').item.json.session_id }}\n\n✅ Make sure you are in a quiet environment with a stable internet connection.\n✅ Test your microphone and speakers before joining.\n\nBest of luck with your interview!\nHR Recruitment Team",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        992,
+        112
+      ],
+      "id": "2c4b7ce8-6ba0-44b3-ba3e-accaaa7538d5",
+      "name": "Send links",
+      "webhookId": "9b13d753-d74f-46e9-b547-0859053a08a6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Vggk5pPkb8KyPILu",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appof7NN9RhTAn9ls",
+          "mode": "list",
+          "cachedResultName": "AI_interview",
+          "cachedResultUrl": "https://airtable.com/appof7NN9RhTAn9ls"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblCbJer734SHS6AK",
+          "mode": "list",
+          "cachedResultName": "interview_candidates",
+          "cachedResultUrl": "https://airtable.com/appof7NN9RhTAn9ls/tblCbJer734SHS6AK"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Status": "Link Sent",
+            "id": "={{ $json.id }}",
+            "session_id": "={{ $('Generate session_id').item.json.session_id }}",
+            "interview_link": "={{ $json.interview_link }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "candidate_id",
+              "displayName": "candidate_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "candidate_name",
+              "displayName": "candidate_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "candidate_email",
+              "displayName": "candidate_email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "target_job_id",
+              "displayName": "target_job_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "interview_date",
+              "displayName": "interview_date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "job_title (from target_job_id)",
+              "displayName": "job_title (from target_job_id)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "job_description (from target_job_id)",
+              "displayName": "job_description (from target_job_id)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "required_skills (from target_job_id)",
+              "displayName": "required_skills (from target_job_id)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "ideal_candidate_profile (from target_job_id)",
+              "displayName": "ideal_candidate_profile (from target_job_id)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "resume_summary",
+              "displayName": "resume_summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "interview_link",
+              "displayName": "interview_link",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Link Sent",
+                  "value": "Link Sent"
+                },
+                {
+                  "name": "Link Not Sent",
+                  "value": "Link Not Sent"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "recommendation",
+              "displayName": "recommendation",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "explanation",
+              "displayName": "explanation",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "conversation_transcript",
+              "displayName": "conversation_transcript",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Calculation",
+              "displayName": "Calculation",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1440,
+        112
+      ],
+      "id": "95847e75-351a-4301-bb13-ac45966f7211",
+      "name": "Update link status",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "VhhcTHNJeFBRtkNz",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Send interview links to candidates.\n",
+        "height": 80
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -192,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "2f3e5a0b-a963-4162-bcd0-0109aee969cb",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "Using post-call webhook and elevenlabs API to fetch audio of the interview.",
+        "height": 80
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -144,
+        656
+      ],
+      "typeVersion": 1,
+      "id": "48fd3729-ba90-4892-82b2-1eefd3a66d81",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.elevenlabs.io/v1/convai/conversations/{{ $json.body.data.conversation_id }}/audio",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "elevenLabsApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xi-api-key",
+              "value": "xi-api-key"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        96,
+        768
+      ],
+      "id": "185ab77c-d2a0-4c0a-8d88-f56f6f09be81",
+      "name": "Elevenlabs API",
+      "credentials": {
+        "elevenLabsApi": {
+          "id": "KeIfmD1soGrRLFzq",
+          "name": "ElevenLabs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "Conversation Audio",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        320,
+        768
+      ],
+      "id": "fd031a0e-8a5d-4a96-89d5-39673b0e5d62",
+      "name": "Upload the audio file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "kB5ivAzaV5KGSVcB",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appof7NN9RhTAn9ls",
+          "mode": "list",
+          "cachedResultName": "AI_interview",
+          "cachedResultUrl": "https://airtable.com/appof7NN9RhTAn9ls"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblCbJer734SHS6AK",
+          "mode": "list",
+          "cachedResultName": "interview_candidates",
+          "cachedResultUrl": "https://airtable.com/appof7NN9RhTAn9ls/tblCbJer734SHS6AK"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "session_id": "={{ $('Elevenlabs API').item.json.body.data.conversation_initiation_client_data.dynamic_variables.session_id }}",
+            "conversation_audio": "={{ $json.webViewLink }}"
+          },
+          "matchingColumns": [
+            "session_id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "candidate_id",
+              "displayName": "candidate_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "candidate_name",
+              "displayName": "candidate_name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "candidate_email",
+              "displayName": "candidate_email",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "target_job_id",
+              "displayName": "target_job_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "interview_date",
+              "displayName": "interview_date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "job_title (from target_job_id)",
+              "displayName": "job_title (from target_job_id)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "job_description (from target_job_id)",
+              "displayName": "job_description (from target_job_id)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "required_skills (from target_job_id)",
+              "displayName": "required_skills (from target_job_id)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "ideal_candidate_profile (from target_job_id)",
+              "displayName": "ideal_candidate_profile (from target_job_id)",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "resume_summary",
+              "displayName": "resume_summary",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "interview_link",
+              "displayName": "interview_link",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Link Sent",
+                  "value": "Link Sent"
+                },
+                {
+                  "name": "Link Not Sent",
+                  "value": "Link Not Sent"
+                }
+              ],
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "recommendation",
+              "displayName": "recommendation",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "explanation",
+              "displayName": "explanation",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "conversation_audio",
+              "displayName": "conversation_audio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Calculation",
+              "displayName": "Calculation",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        544,
+        768
+      ],
+      "id": "9fae630c-dcce-483d-82c6-2d58d9c8daa1",
+      "name": "Update the record with link",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "VhhcTHNJeFBRtkNz",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Eleven_labs": [
+      {
+        "json": {
+          "headers": {
+            "host": "shravaniyadav.app.n8n.cloud",
+            "user-agent": "ElevenLabs/1.0",
+            "content-length": "70",
+            "accept": "*/*",
+            "accept-encoding": "gzip, br",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "cf-connecting-ip": "34.59.11.47",
+            "cf-ew-via": "15",
+            "cf-ipcountry": "US",
+            "cf-ray": "974a694d81a6000a-ORD",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "n8n.cloud",
+            "content-type": "application/json",
+            "x-forwarded-for": "34.59.11.47, 172.70.127.48",
+            "x-forwarded-host": "shravaniyadav.app.n8n.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik-prod-users-gwc-65-cbb4dd965-6sdrq",
+            "x-is-trusted": "yes",
+            "x-real-ip": "34.59.11.47"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "session_id": "1756106884417-4824",
+            "action": "interview_candidates"
+          },
+          "webhookUrl": "https://shravaniyadav.app.n8n.cloud/webhook-test/AI-interview",
+          "executionMode": "test"
+        }
+      }
+    ],
+    "received_data": [
+      {
+        "json": {
+          "session_id": "1756106884417-4824",
+          "recommendation": "Further review",
+          "explanation": "Emily has a good foundation but needs more practical experience. Further technical assessment recommended."
+        }
+      }
+    ],
+    "Tools Agent": [
+      {
+        "json": {
+          "output": "Hello! I have fetched the details for the interview session.\n\n**Candidate Name:** Emily Chen\n**Job Title:** Software Engineer Intern\n\n**Job Description:**\n\"Assist the engineering team in developing, testing, and maintaining web applications and services. Contribute to code reviews, write documentation, and participate in agile development cycles. Will work primarily on backend services using Python and cloud-based APIs.\"\n\n**Candidate Resume Summary:**\n\"Currently a junior at Tech University studying Computer Science. Has experience with Python through coursework, including a final project building a small e-commerce backend with Flask and SQLite. Familiar with basic Git commands and participated in a campus hackathon where her team developed a simple task management app. Eager to gain industry experience in web development.\"\n\n**Ideal Candidate Profile:**\n\"A self-motivated and curious individual with a strong foundation in computer science fundamentals. Eager to learn new technologies and contribute to a fast-paced development environment.\"\n\n**Required Skills:**\n\"Python, Django/Flask, RESTful APIs, Git, SQL/NoSQL, Agile/Scrum, Problem-solving, Teamwork, Communication\"\n\nYou can now begin the interview with Emily Chen for the Software Engineer Intern position."
+        }
+      }
+    ],
+    "Send links": [
+      {
+        "json": {
+          "id": "198e1b73d54d52ed",
+          "threadId": "198e1b73d54d52ed",
+          "labelIds": [
+            "UNREAD",
+            "SENT",
+            "INBOX"
+          ]
+        }
+      }
+    ],
+    "conversation_transcript": [
+      {
+        "json": {
+          "headers": {
+            "host": "shravaniyadav.app.n8n.cloud",
+            "user-agent": "ElevenLabs/1.0",
+            "content-length": "5966",
+            "accept": "*/*",
+            "accept-encoding": "gzip, br",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "cf-connecting-ip": "34.59.11.47",
+            "cf-ew-via": "15",
+            "cf-ipcountry": "US",
+            "cf-ray": "97513a1836d51078-ORD",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "n8n.cloud",
+            "content-type": "application/json",
+            "elevenlabs-signature": "t=1756189264,v0=eeb86581fde7846a7d9043cbf0359f69c264fc051bd9fd3730d24a581233219c",
+            "x-forwarded-for": "34.59.11.47, 172.69.59.180",
+            "x-forwarded-host": "shravaniyadav.app.n8n.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik-prod-users-gwc-65-cbb4dd965-6sdrq",
+            "x-is-trusted": "yes",
+            "x-real-ip": "34.59.11.47"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "type": "post_call_transcription",
+            "event_timestamp": 1756189264,
+            "data": {
+              "agent_id": "agent_5001k2hanwceer1t72bp4a3w3v3f",
+              "conversation_id": "conv_8001k3jgjg12e58v2k0znwst1mp6",
+              "status": "done",
+              "user_id": "ik5q48t2vAM8PUI2oTNKI1MquVa2",
+              "transcript": [
+                {
+                  "role": "agent",
+                  "message": "Hello, this is Alex. Thank you for taking the time to speak with me today. I’ll be conducting your interview for the intern position. Let’s start with you telling me a bit about yourself and what attracted you to this position.\n",
+                  "tool_calls": [],
+                  "tool_results": [],
+                  "feedback": null,
+                  "llm_override": null,
+                  "time_in_call_secs": 0,
+                  "conversation_turn_metrics": {
+                    "metrics": {
+                      "convai_tts_service_ttfb": {
+                        "elapsed_time": 0.18650191099732183
+                      }
+                    }
+                  },
+                  "rag_retrieval_info": null,
+                  "llm_usage": null,
+                  "interrupted": false,
+                  "original_message": null,
+                  "source_medium": null
+                },
+                {
+                  "role": "user",
+                  "message": "Testing, testing.",
+                  "tool_calls": [],
+                  "tool_results": [],
+                  "feedback": null,
+                  "llm_override": null,
+                  "time_in_call_secs": 8,
+                  "conversation_turn_metrics": {
+                    "metrics": {
+                      "convai_asr_trailing_service_latency": {
+                        "elapsed_time": 0.10399450801196508
+                      }
+                    }
+                  },
+                  "rag_retrieval_info": null,
+                  "llm_usage": null,
+                  "interrupted": false,
+                  "original_message": null,
+                  "source_medium": "audio"
+                },
+                {
+                  "role": "agent",
+                  "message": "Okay, I hear you...",
+                  "tool_calls": [],
+                  "tool_results": [],
+                  "feedback": null,
+                  "llm_override": null,
+                  "time_in_call_secs": 15,
+                  "conversation_turn_metrics": {
+                    "metrics": {
+                      "convai_llm_service_ttf_sentence": {
+                        "elapsed_time": 0.39877403900027275
+                      },
+                      "convai_llm_service_ttfb": {
+                        "elapsed_time": 0.23821409500669688
+                      },
+                      "convai_llm_service_tt_last_sentence": {
+                        "elapsed_time": 0.4554608239996014
+                      },
+                      "convai_tts_service_ttfb": {
+                        "elapsed_time": 0.1703586359944893
+                      }
+                    }
+                  },
+                  "rag_retrieval_info": null,
+                  "llm_usage": {
+                    "model_usage": {
+                      "gemini-2.0-flash-001": {
+                        "input": {
+                          "tokens": 1571,
+                          "price": 0.00015710000000000002
+                        },
+                        "input_cache_read": {
+                          "tokens": 0,
+                          "price": 0
+                        },
+                        "input_cache_write": {
+                          "tokens": 0,
+                          "price": 0
+                        },
+                        "output_total": {
+                          "tokens": 33,
+                          "price": 0.0000132
+                        }
+                      }
+                    }
+                  },
+                  "interrupted": true,
+                  "original_message": "Okay, I hear you loud and clear. To make sure we're all set, could you confirm your name and the position you're interviewing for?\n",
+                  "source_medium": null
+                }
+              ],
+              "metadata": {
+                "start_time_unix_secs": 1756189245,
+                "accepted_time_unix_secs": 1756189245,
+                "call_duration_secs": 17,
+                "cost": 98,
+                "deletion_settings": {
+                  "deletion_time_unix_secs": 1819261264,
+                  "deleted_logs_at_time_unix_secs": null,
+                  "deleted_audio_at_time_unix_secs": null,
+                  "deleted_transcript_at_time_unix_secs": null,
+                  "delete_transcript_and_pii": true,
+                  "delete_audio": true
+                },
+                "feedback": {
+                  "overall_score": null,
+                  "likes": 0,
+                  "dislikes": 0
+                },
+                "authorization_method": "authorization_header",
+                "charging": {
+                  "dev_discount": true,
+                  "is_burst": false,
+                  "tier": "free",
+                  "llm_usage": {
+                    "irreversible_generation": {
+                      "model_usage": {
+                        "gemini-2.0-flash-001": {
+                          "input": {
+                            "tokens": 1571,
+                            "price": 0.00015710000000000002
+                          },
+                          "input_cache_read": {
+                            "tokens": 0,
+                            "price": 0
+                          },
+                          "input_cache_write": {
+                            "tokens": 0,
+                            "price": 0
+                          },
+                          "output_total": {
+                            "tokens": 33,
+                            "price": 0.0000132
+                          }
+                        }
+                      }
+                    },
+                    "initiated_generation": {
+                      "model_usage": {
+                        "gemini-2.0-flash-001": {
+                          "input": {
+                            "tokens": 2924,
+                            "price": 0.00029240000000000006
+                          },
+                          "input_cache_read": {
+                            "tokens": 0,
+                            "price": 0
+                          },
+                          "input_cache_write": {
+                            "tokens": 0,
+                            "price": 0
+                          },
+                          "output_total": {
+                            "tokens": 39,
+                            "price": 0.0000156
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "llm_price": 0.00030800000000000006,
+                  "llm_charge": 3,
+                  "call_charge": 95
+                },
+                "phone_call": null,
+                "batch_call": null,
+                "termination_reason": "Client disconnected: 1005",
+                "error": null,
+                "main_language": "en",
+                "rag_usage": null,
+                "text_only": false,
+                "features_usage": {
+                  "language_detection": {
+                    "enabled": false,
+                    "used": false
+                  },
+                  "transfer_to_agent": {
+                    "enabled": false,
+                    "used": false
+                  },
+                  "transfer_to_number": {
+                    "enabled": false,
+                    "used": false
+                  },
+                  "multivoice": {
+                    "enabled": false,
+                    "used": false
+                  },
+                  "dtmf_tones": {
+                    "enabled": false,
+                    "used": false
+                  },
+                  "external_mcp_servers": {
+                    "enabled": false,
+                    "used": false
+                  },
+                  "pii_zrm_workspace": false,
+                  "pii_zrm_agent": false,
+                  "tool_dynamic_variable_updates": {
+                    "enabled": false,
+                    "used": false
+                  },
+                  "is_livekit": false,
+                  "voicemail_detection": {
+                    "enabled": false,
+                    "used": false
+                  },
+                  "workflow": {
+                    "enabled": false,
+                    "tool_node": {
+                      "enabled": false,
+                      "used": false
+                    }
+                  },
+                  "agent_testing": {
+                    "enabled": false,
+                    "tests_ran_after_last_modification": false,
+                    "tests_ran_in_last_7_days": false
+                  }
+                },
+                "eleven_assistant": {
+                  "is_eleven_assistant": false
+                },
+                "initiator_id": "ik5q48t2vAM8PUI2oTNKI1MquVa2",
+                "conversation_initiation_source": "react_sdk",
+                "conversation_initiation_source_version": "0.5.0",
+                "timezone": null
+              },
+              "analysis": {
+                "evaluation_criteria_results": {},
+                "data_collection_results": {},
+                "call_successful": "success",
+                "transcript_summary": "The conversation begins with Alex, the interviewer, introducing themself and initiating the interview by asking the candidate to share about themself and their interest in the intern position. The user responds with \"Testing, testing,\" and Alex confirms they can hear the user.\n",
+                "call_summary_title": "Interview audio check"
+              },
+              "conversation_initiation_client_data": {
+                "conversation_config_override": {
+                  "tts": {
+                    "voice_id": null
+                  },
+                  "conversation": {
+                    "text_only": null
+                  },
+                  "agent": {
+                    "first_message": null,
+                    "language": null,
+                    "prompt": null
+                  }
+                },
+                "custom_llm_extra_body": {},
+                "user_id": "ik5q48t2vAM8PUI2oTNKI1MquVa2",
+                "source_info": {
+                  "source": "react_sdk",
+                  "version": "0.5.0"
+                },
+                "dynamic_variables": {
+                  "job_title": "Software Engineer Intern",
+                  "session_id": "1756106884417-4824",
+                  "candidate_name": "Emily Chen",
+                  "candidate_id": "CAND-001",
+                  "system__agent_id": "agent_5001k2hanwceer1t72bp4a3w3v3f",
+                  "system__current_agent_id": "agent_5001k2hanwceer1t72bp4a3w3v3f",
+                  "system__conversation_id": "conv_8001k3jgjg12e58v2k0znwst1mp6",
+                  "system__caller_id": null,
+                  "system__called_number": null,
+                  "system__call_duration_secs": 17,
+                  "system__time_utc": "2025-08-26T06:21:02.484719+00:00",
+                  "system__time": "Tuesday, 06:21 26 August 2025",
+                  "system__timezone": null,
+                  "system__call_sid": null
+                }
+              }
+            }
+          },
+          "webhookUrl": "https://shravaniyadav.app.n8n.cloud/webhook-test/post-call",
+          "executionMode": "test"
+        }
+      }
+    ],
+    "Upload the audio file": [
+      {
+        "json": {
+          "kind": "drive#file",
+          "id": "1JA2yDW9g8Jk0TFg7HUyWgh7HDrnSoQZY",
+          "name": "Conversation Audio",
+          "mimeType": "audio/mpeg",
+          "starred": false,
+          "trashed": false,
+          "explicitlyTrashed": false,
+          "parents": [
+            "0AEcSbVA8EFNAUk9PVA"
+          ],
+          "spaces": [
+            "drive"
+          ],
+          "version": "2",
+          "webContentLink": "https://drive.google.com/uc?id=1JA2yDW9g8Jk0TFg7HUyWgh7HDrnSoQZY&export=download",
+          "webViewLink": "https://drive.google.com/file/d/1JA2yDW9g8Jk0TFg7HUyWgh7HDrnSoQZY/view?usp=drivesdk",
+          "iconLink": "https://drive-thirdparty.googleusercontent.com/16/type/audio/mpeg",
+          "hasThumbnail": false,
+          "thumbnailVersion": "0",
+          "viewedByMe": false,
+          "createdTime": "2025-08-27T08:42:00.343Z",
+          "modifiedTime": "2025-08-27T08:42:01.014Z",
+          "modifiedByMeTime": "2025-08-27T08:42:01.014Z",
+          "modifiedByMe": true,
+          "owners": [
+            {
+              "kind": "drive#user",
+              "displayName": "shravani yadav",
+              "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocL9GT8I9ybLEBNbNCOumIZP_-Wu1SgXirs9qbbaVM7KoR97_XIJ=s64",
+              "me": true,
+              "permissionId": "16443870507417634339",
+              "emailAddress": "shrasanyad@gmail.com"
+            }
+          ],
+          "lastModifyingUser": {
+            "kind": "drive#user",
+            "displayName": "shravani yadav",
+            "photoLink": "https://lh3.googleusercontent.com/a/ACg8ocL9GT8I9ybLEBNbNCOumIZP_-Wu1SgXirs9qbbaVM7KoR97_XIJ=s64",
+            "me": true,
+            "permissionId": "16443870507417634339",
+            "emailAddress": "shrasanyad@gmail.com"
+          },
+          "shared": false,
+          "ownedByMe": true,
+          "downloadRestrictions": {
+            "itemDownloadRestriction": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            },
+            "effectiveDownloadRestrictionWithContext": {
+              "restrictedForReaders": false,
+              "restrictedForWriters": false
+            }
+          },
+          "capabilities": {
+            "canAcceptOwnership": false,
+            "canAddChildren": false,
+            "canAddMyDriveParent": false,
+            "canChangeCopyRequiresWriterPermission": true,
+            "canChangeItemDownloadRestriction": true,
+            "canChangeSecurityUpdateEnabled": false,
+            "canChangeViewersCanCopyContent": true,
+            "canComment": true,
+            "canCopy": true,
+            "canDelete": true,
+            "canDisableInheritedPermissions": false,
+            "canDownload": true,
+            "canEdit": true,
+            "canEnableInheritedPermissions": true,
+            "canListChildren": false,
+            "canModifyContent": true,
+            "canModifyContentRestriction": true,
+            "canModifyEditorContentRestriction": true,
+            "canModifyOwnerContentRestriction": true,
+            "canModifyLabels": false,
+            "canMoveChildrenWithinDrive": false,
+            "canMoveItemIntoTeamDrive": true,
+            "canMoveItemOutOfDrive": true,
+            "canMoveItemWithinDrive": true,
+            "canReadLabels": false,
+            "canReadRevisions": true,
+            "canRemoveChildren": false,
+            "canRemoveContentRestriction": false,
+            "canRemoveMyDriveParent": true,
+            "canRename": true,
+            "canShare": true,
+            "canTrash": true,
+            "canUntrash": true
+          },
+          "viewersCanCopyContent": true,
+          "copyRequiresWriterPermission": false,
+          "writersCanShare": true,
+          "permissions": [
+            {
+              "kind": "drive#permission",
+              "id": "16443870507417634339",
+              "type": "user",
+              "emailAddress": "shrasanyad@gmail.com",
+              "role": "owner",
+              "displayName": "shrasanyad",
+              "deleted": false,
+              "pendingOwner": false
+            }
+          ],
+          "permissionIds": [
+            "16443870507417634339"
+          ],
+          "originalFilename": "Untitled",
+          "fullFileExtension": "",
+          "fileExtension": "",
+          "md5Checksum": "59ac07e910a4c5c0c4f1957f21e78d39",
+          "sha1Checksum": "7eb3c5f3a7fb1941fe593244dc1db55b26eb5294",
+          "sha256Checksum": "6d054cd4938bb2486052526149dc93ec47a6ccb09a21c1767334b6b5d6f8d4eb",
+          "size": "265031",
+          "quotaBytesUsed": "265031",
+          "headRevisionId": "0B0cSbVA8EFNAWkw3VHp3ZnVqVWJRRnhMQUwrY2lqMnVPdmJvPQ",
+          "isAppAuthorized": true,
+          "linkShareMetadata": {
+            "securityUpdateEligible": false,
+            "securityUpdateEnabled": true
+          },
+          "inheritedPermissionsDisabled": false
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Update candidate_details": {
+      "ai_tool": [
+        [
+          {
+            "node": "Tools Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "interview_candidates": {
+      "ai_tool": [
+        [
+          {
+            "node": "Tools Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Link_sent_status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Generate session_id",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format_date_for_email": {
+      "main": [
+        [
+          {
+            "node": "Send links",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Link_sent_status": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate session_id": {
+      "main": [
+        [
+          {
+            "node": "Format_date_for_email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Update link status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Tools Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "conversation_transcript": {
+      "main": [
+        [
+          {
+            "node": "Elevenlabs API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eleven_labs": {
+      "main": [
+        [
+          {
+            "node": "received_data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "received_data": {
+      "main": [
+        [
+          {
+            "node": "Tools Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tools Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send links": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Elevenlabs API": {
+      "main": [
+        [
+          {
+            "node": "Upload the audio file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload the audio file": {
+      "main": [
+        [
+          {
+            "node": "Update the record with link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0f88cd92-9903-4d00-867c-597e017904f0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3d7a83af8d943e0c5ebd12acd12ec7342e664120a4e77d044db86dcf49dcb0ad"
+  },
+  "id": "TcAkmkGOjh3JE4OA",
+  "tags": []
+}
